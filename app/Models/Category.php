@@ -24,12 +24,16 @@ class Category extends Model
 
     public function getDescendantsTree()
     {
-        return $this->children->map(function ($child) {
-            return [
-                'id' => $child->id,
-                'category_name' => $child->category_name,
-                'children' => $child->getDescendantsTree()
-            ];
-        });
+        return $this->children()
+            ->with('children')
+            ->paginate(10)
+            ->map(function ($child) {
+                return [
+                    'id' => $child->id,
+                    'category_name' => $child->category_name,
+                    'parent_id' => $child->parent_id,
+                    'children' => $child->getDescendantsTree()
+                ];
+            });
     }
 }

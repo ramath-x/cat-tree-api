@@ -10,7 +10,8 @@
         "laravel/sanctum": "^4.0",
         "laravel/telescope": "^5.1",
         "laravel/tinker": "^2.9",
-        "rakutentech/laravel-request-docs": "^2.38"
+        "rakutentech/laravel-request-docs": "^2.38",
+        "symfony/translation": "*"
     },
     "require-dev": {
         "erjanmx/laravel-live-tinker": "^1.1",

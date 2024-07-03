@@ -19,20 +19,21 @@ class CategoryController extends Controller
     // GET: สำหรับเรียกดู Category ทั้งหมด ในรูปแบบ Tree ภายใต้ node ที่รับค่า
     public function getCategoryTree($id)
     {
-        $category = Category::findOrFail($id);
+        $category = Category::with('children')->findOrFail($id);
         $tree = [
             'id' => $category->id,
             'category_name' => $category->category_name,
             'parent_id' => $category->parent_id,
             'children' => $category->getDescendantsTree()
         ];
+
         return response()->json($tree);
     }
 
     // GET: สำหรับเรียกดู Category ทั้งหมด ในรูปแบบ Array
     public function getAllCategories()
     {
-        $categories = Category::all();
+        $categories = Category::paginate(10);
         return response()->json($categories);
     }
 
