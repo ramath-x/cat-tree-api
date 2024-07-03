@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostStandaloneCategoryRequest;
 use App\Http\Requests\PostLeafCategoryRequest;
+use App\Http\Resources\CategoryTreeResource;
 
 class CategoryController extends Controller
 {
@@ -19,15 +20,9 @@ class CategoryController extends Controller
     // GET: สำหรับเรียกดู Category ทั้งหมด ในรูปแบบ Tree ภายใต้ node ที่รับค่า
     public function getCategoryTree($id)
     {
-        $category = Category::with('children')->findOrFail($id);
-        $tree = [
-            'id' => $category->id,
-            'category_name' => $category->category_name,
-            'parent_id' => $category->parent_id,
-            'children' => $category->getDescendantsTree()
-        ];
+        $category = Category::findOrFail($id);
 
-        return response()->json($tree);
+        return (new CategoryTreeResource($category))->response();
     }
 
     // GET: สำหรับเรียกดู Category ทั้งหมด ในรูปแบบ Array
