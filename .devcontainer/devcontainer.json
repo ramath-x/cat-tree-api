@@ -1,0 +1,58 @@
+// https://aka.ms/devcontainer.json
+{
+	"name": "Existing Docker Compose (Extend)",
+	"dockerComposeFile": [
+		"../docker-compose.yml"
+	],
+	"service": "laravel.test",
+	"workspaceFolder": "/var/www/html",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				// "mikestead.dotenv",
+				// "amiralizadeh9480.laravel-extra-intellisense",
+				// "ryannaddy.laravel-artisan",
+				// "onecentlin.laravel5-snippets",
+				// "onecentlin.laravel-blade"
+				"amazonwebservices.aws-toolkit-vscode",
+				"amiralizadeh9480.laravel-extra-intellisense",
+				"bmewburn.vscode-intelephense-client",
+				"Codeium.codeium",
+				"codezombiech.gitignore",
+				"DavidAnson.vscode-markdownlint",
+				"donjayamanne.githistory",
+				"eamodio.gitlens",
+				"esbenp.prettier-vscode",
+				"foxundermoon.shell-format",
+				"GitHub.copilot",
+				"GitHub.copilot-labs",
+				"Gruntfuggly.todo-tree",
+				"MehediDracula.php-namespace-resolver",
+				"mhutchie.git-graph",
+				"MrChetan.phpstorm-parameter-hints-in-vscode",
+				"nhoizey.gremlins",
+				"onecentlin.laravel-blade",
+				"PeterSchmalfeldt.explorer-exclude",
+				"rangav.vscode-thunder-client",
+				"redhat.vscode-yaml",
+				"shufo.vscode-blade-formatter",
+				"SonarSource.sonarlint-vscode",
+				"spywhere.guides",
+				"streetsidesoftware.code-spell-checker",
+				"stylelint.vscode-stylelint",
+				"TabNine.tabnine-vscode",
+				"VisualStudioExptTeam.intellicode-api-usage-examples",
+				"VisualStudioExptTeam.vscodeintellicode",
+				"waderyan.gitblame",
+				"xdebug.php-debug",
+				"yzhang.markdown-all-in-one"
+			],
+			"settings": {}
+		}
+	},
+	"remoteUser": "sail",
+	"postCreateCommand": "chown -R 1000:1000 /var/www/html 2>/dev/null || true"
+	// "forwardPorts": [],
+	// "runServices": [],
+	// "shutdownAction": "none",
+}
