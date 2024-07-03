@@ -28,7 +28,7 @@ class CategoryController extends Controller
     // GET: สำหรับเรียกดู Category ทั้งหมด ในรูปแบบ Array
     public function getAllCategories()
     {
-        $categories = Category::paginate(10);
+        $categories = Category::simplePaginate(10);
         return response()->json($categories);
     }
 
