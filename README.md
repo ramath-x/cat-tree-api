@@ -123,7 +123,8 @@ REST API สำหรับจัดการ Category แบบ Tree Structure 
         }
         ```
 
--   **DELETE** `/api/categories/{id}` - ลบ Category ตาม `id` ที่ระบุ
+-   **DELETE** `/api/categories/{id}`
+    -   ลบ Category ตาม `id` ที่ระบุ
 
 ## การทดสอบ:
 
