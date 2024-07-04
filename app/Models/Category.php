@@ -22,18 +22,23 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id');
     }
 
-    public function getDescendantsTree()
+    public function hasChildren()
     {
-        return $this->children()
-            ->with('children')
-            ->paginate(10)
-            ->map(function ($child) {
-                return [
-                    'id' => $child->id,
-                    'category_name' => $child->category_name,
-                    'parent_id' => $child->parent_id,
-                    'children' => $child->getDescendantsTree()
-                ];
-            });
+        return $this->children()->exists();
     }
+
+    // public function getDescendantsTree()
+    // {
+    //     return $this->children()
+    //         ->with('children')
+    //         ->paginate(10)
+    //         ->map(function ($child) {
+    //             return [
+    //                 'id' => $child->id,
+    //                 'category_name' => $child->category_name,
+    //                 'parent_id' => $child->parent_id,
+    //                 'children' => $child->getDescendantsTree()
+    //             ];
+    //         });
+    // }
 }

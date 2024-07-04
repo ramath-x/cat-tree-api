@@ -18,17 +18,40 @@ class CategoryController extends Controller
     }
 
     // GET: สำหรับเรียกดู Category ทั้งหมด ในรูปแบบ Tree ภายใต้ node ที่รับค่า
-    public function getCategoryTree($id)
+    // public function getCategoryTree($id)
+    // {
+    //     $category = Category::findOrFail($id);
+
+    //     return (new CategoryTreeResource($category))->response();
+    // }
+
+    public function getCategoryTree(Request $request, $id)
     {
         $category = Category::findOrFail($id);
+        $perPage = $request->input('per_page', 10);
+        $page = $request->input('page', 1);
 
-        return (new CategoryTreeResource($category))->response();
+        return new CategoryTreeResource($category);
+    }
+
+    public function getCategoryChildren(Request $request, $id)
+    {
+        $category = Category::findOrFail($id);
+        $perPage = $request->input('per_page', 1);
+        $page = $request->input('page', 1);
+
+        $children = $category->children()
+            ->orderBy('id')
+            ->paginate($perPage);
+
+        return CategoryTreeResource::collection($children);
     }
 
     // GET: สำหรับเรียกดู Category ทั้งหมด ในรูปแบบ Array
     public function getAllCategories()
     {
-        $categories = Category::simplePaginate(10);
+        // $categories = Category::simplePaginate(10);
+        $categories = Category::all();
         return response()->json($categories);
     }
 

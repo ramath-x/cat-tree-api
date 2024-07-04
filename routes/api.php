@@ -22,7 +22,9 @@ Route::prefix('categories')->group(function () {
     Route::get('/standalone/{id}', [CategoryController::class, 'getStandaloneCategory']);
 
     // GET: สำหรับเรียกดู Category ทั้งหมด ในรูปแบบ Tree ภายใต้ node ที่รับค่า
+    // Route::get('/tree/{id}', [CategoryController::class, 'getCategoryTree']);
     Route::get('/tree/{id}', [CategoryController::class, 'getCategoryTree']);
+    Route::get('/tree/{id}/children', [CategoryController::class, 'getCategoryChildren']);
 
     // GET: สำหรับเรียกดู Category ทั้งหมด ในรูปแบบ Array
     Route::get('/all', [CategoryController::class, 'getAllCategories']);

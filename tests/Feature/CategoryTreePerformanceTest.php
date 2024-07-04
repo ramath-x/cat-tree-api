@@ -31,8 +31,8 @@ class CategoryTreePerformanceTest extends TestCase
             $this->rootCategory = Category::create(['category_name' => 'Root']);
             $parent = $this->rootCategory;
 
-            // for ($i = 1; $i < 10000; $i++) {
-            for ($i = 1; $i < 300; $i++) {
+            for ($i = 1; $i < 10000; $i++) {
+                // for ($i = 1; $i < 300; $i++) {
                 $child = Category::create([
                     'category_name' => "Category Level $i",
                     'parent_id' => $parent->id
@@ -60,7 +60,7 @@ class CategoryTreePerformanceTest extends TestCase
      */
     public function test_fetch_deep_tree_performance(): void
     {
-        // Check if the root category is set
+        // // Check if the root category is set
         if ($this->rootCategory === null) {
             Log::info('Root category is not set');
             throw new AssertionFailedError("Root category is not set");
