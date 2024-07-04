@@ -50,3 +50,34 @@ REST API สำหรับจัดการ Category แบบ Tree Structure
     ```
 
 ## วิธีการใช้งานโปรเจกต์
+
+## วิธีการใช้งานโปรเจกต์
+
+1.  รัน Seeder เพื่อเตรียมข้อมูลเบื้องต้น
+
+    ```bash
+    ./vendor/bin/sail artisan db:seed --class="Database\Seeders\CategorySeeder"
+    ```
+
+2.  อธิบาย API LIST
+    คุณสามารถดูรายละเอียดทั้งหมดของ API ได้ที่ `url//request-docs/` หรือสามารถยิ่งผ่านวิธีการอื่นๆ ที่กำหนด
+
+        ตั้งค่า headers ตามนี้:
+        ```http
+          {
+
+    "Content-Type": "application/json",
+    "Accept":"application/json"
+    }
+
+    ```
+
+    ```
+
+### API เส้นทั้งหมด มีดังนี้:
+
+-   **GET** `/api/categories/standalone/{id}`
+-   **GET** `/api/categories/tree/{id}`
+-   **GET** `/api/categories/all`
+-   **POST** `/api/categories/standalone`
+-   **DELETE** `/api/categories/{id}`
