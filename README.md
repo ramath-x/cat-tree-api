@@ -59,25 +59,67 @@ REST API สำหรับจัดการ Category แบบ Tree Structure
     ./vendor/bin/sail artisan db:seed --class="Database\Seeders\CategorySeeder"
     ```
 
-2.  อธิบาย API LIST
-    คุณสามารถดูรายละเอียดทั้งหมดของ API ได้ที่ `url//request-docs/` หรือสามารถยิ่งผ่านวิธีการอื่นๆ ที่กำหนด
+2.  คุณสามารถดูรายละเอียดทั้งหมดของ API ได้ที่ `url//request-docs/` หรือสามารถยิ่งผ่านวิธีการอื่นๆ ที่กำหนด
 
-        ตั้งค่า headers ตามนี้:
-        ```http
-          {
+    การตั้งค่า headers ตามนี้:
+
+    ```http
 
     "Content-Type": "application/json",
     "Accept":"application/json"
-    }
 
-    ```
 
     ```
 
 ### API เส้นทั้งหมด มีดังนี้:
 
+-   **GET** `/api/categories/all`
 -   **GET** `/api/categories/standalone/{id}`
 -   **GET** `/api/categories/tree/{id}`
--   **GET** `/api/categories/all`
 -   **POST** `/api/categories/standalone`
 -   **DELETE** `/api/categories/{id}`
+
+-   **GET** `/api/categories/all`
+
+    -   รับข้อมูล Category ทั้งหมด
+
+-   **GET** `/api/categories/standalone/{id}`
+
+    -   ใช้ parameter `id` (required) เพื่อรับข้อมูล Category ที่เป็น standalone node
+    -   `per_page` (optional): จำนวนข้อมูลต่อหน้า ต้องเป็นค่า `int` ระหว่าง 1 ถึง 100 (default: 10)
+    -   `page` (optional): เลขหน้าที่ต้องการ ต้องเป็นค่า `int` มากกว่า 0 (default: 1)
+
+-   **GET** `/api/categories/tree/{id}`
+
+    -   ใช้ parameter `id` (required) เพื่อรับข้อมูล Category แบบ Tree ภายใต้ node ที่ระบุ
+    -   `per_page` (optional): จำนวนข้อมูลต่อหน้า ต้องเป็นค่า `int` ระหว่าง 1 ถึง 100 (default: 10)
+    -   `page` (optional): เลขหน้าที่ต้องการ ต้องเป็นค่า `int` มากกว่า 0 (default: 1)
+
+-   **POST** `/api/categories/standalone`
+
+    -   สร้าง Category ใหม่ที่เป็น standalone node
+    -   Parameters:
+        -   `category_name` (required): ต้องเป็น `string` และไม่เกิน 255 ตัวอักษร
+    -   ตัวอย่าง JSON:
+        ```json
+        {
+            "category_name": "ascas"
+        }
+        ```
+
+-   **POST** `/api/categories/leaf`
+
+    -   สร้าง Category ใหม่ที่เป็น leaf node
+    -   Parameters:
+        -   `category_name` (required): ต้องเป็น `string` และไม่เกิน 255 ตัวอักษร
+        -   `parent_id` (required): ต้องเป็น `exists:categories,id`
+    -   ตัวอย่าง JSON:
+        ```json
+        {
+            "category_name": "ascas",
+            "parent_id": "1"
+        }
+        ```
+
+-   **DELETE** `/api/categories/{id}`
+    -   ลบ Category ตาม `id` ที่ระบุ
