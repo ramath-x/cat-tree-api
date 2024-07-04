@@ -1,6 +1,6 @@
-# Cat Tree API
+# Category API
 
-REST API สำหรับจัดการ Category แบบ Tree Structure
+REST API สำหรับจัดการ Category แบบ Tree Structure และ standalone
 
 ## การติดตั้ง (Installation)
 
@@ -51,15 +51,15 @@ REST API สำหรับจัดการ Category แบบ Tree Structure
 
 ## วิธีการใช้งานโปรเจกต์
 
-## วิธีการใช้งานโปรเจกต์
-
 1.  รัน Seeder เพื่อเตรียมข้อมูลเบื้องต้น
 
     ```bash
     ./vendor/bin/sail artisan db:seed --class="Database\Seeders\CategorySeeder"
     ```
 
-2.  คุณสามารถดูรายละเอียดทั้งหมดของ API ได้ที่ `url//request-docs/` หรือสามารถยิ่งผ่านวิธีการอื่นๆ ที่กำหนด
+2.  คุณสามารถดูรายละเอียดทั้งหมดของ API ได้ที่ `http://localhost/request-docs/`
+
+สามารถยิ่งผ่านวิธีการอื่นๆ
 
     การตั้งค่า headers ตามนี้:
 
@@ -78,6 +78,8 @@ REST API สำหรับจัดการ Category แบบ Tree Structure
 -   **GET** `/api/categories/tree/{id}`
 -   **POST** `/api/categories/standalone`
 -   **DELETE** `/api/categories/{id}`
+
+## รายละเอียด API เส้นทั้งหมด
 
 -   **GET** `/api/categories/all`
 
@@ -103,7 +105,7 @@ REST API สำหรับจัดการ Category แบบ Tree Structure
     -   ตัวอย่าง JSON:
         ```json
         {
-            "category_name": "ascas"
+            "category_name": "category standalone"
         }
         ```
 
@@ -116,10 +118,34 @@ REST API สำหรับจัดการ Category แบบ Tree Structure
     -   ตัวอย่าง JSON:
         ```json
         {
-            "category_name": "ascas",
+            "category_name": "category leaf node",
             "parent_id": "1"
         }
         ```
 
--   **DELETE** `/api/categories/{id}`
-    -   ลบ Category ตาม `id` ที่ระบุ
+-   **DELETE** `/api/categories/{id}` - ลบ Category ตาม `id` ที่ระบุ
+
+        ### การทดสอบ
+        - เพื่อทดสอบสร้าง Tree ที่มีความลึก 10,000 Node และสามารถ เรียกดู tree จาก root node ได้
+
+    โดยใช้ Response Time ไม่เกิน 2000ms - 3000ms (2-3 Seconds), ใช้คำสั่งนี้:
+
+    ```bash
+    ./vendor/bin/sail artisan test --filter=CategoryTreePerformanceTest
+
+    ```
+
+    # ตัวอย่างผลลัพธ์
+
+-   เมื่อทดสอบสำเร็จ, ผลลัพธ์จะแสดงดังนี้:
+
+```bash
+    PASS  Tests\Feature\CategoryTreePerformanceTest
+✓ fetch deep tree performance                                                                                 21.36s
+
+Tests:    1 passed (3 assertions)
+Duration: 21.54s
+
+```
+
+-นี้ยืนยันว่าการดึงต้นไม้ลึกสามารถทำได้ตามเงื่อนไขการใช้งานที่กำหนดไว้
