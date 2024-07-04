@@ -4,17 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
-Route::get(
-    '/hello',
-    function () {
-        return "Hello";
-    }
-);
-
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:sanctum');
 
 
 Route::prefix('categories')->group(function () {
@@ -22,9 +14,7 @@ Route::prefix('categories')->group(function () {
     Route::get('/standalone/{id}', [CategoryController::class, 'getStandaloneCategory']);
 
     // GET: สำหรับเรียกดู Category ทั้งหมด ในรูปแบบ Tree ภายใต้ node ที่รับค่า
-    // Route::get('/tree/{id}', [CategoryController::class, 'getCategoryTree']);
     Route::get('/tree/{id}', [CategoryController::class, 'getCategoryTree']);
-    Route::get('/tree/{id}/children', [CategoryController::class, 'getCategoryChildren']);
 
     // GET: สำหรับเรียกดู Category ทั้งหมด ในรูปแบบ Array
     Route::get('/all', [CategoryController::class, 'getAllCategories']);

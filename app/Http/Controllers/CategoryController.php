@@ -11,6 +11,7 @@ use App\Http\Resources\CategoryTreeResource;
 class CategoryController extends Controller
 {
     // GET: สำหรับเรียกดู Category แบบ standalone node
+
     public function getStandaloneCategory($id)
     {
         $category = Category::whereNull('parent_id')->findOrFail($id);
@@ -18,40 +19,43 @@ class CategoryController extends Controller
     }
 
     // GET: สำหรับเรียกดู Category ทั้งหมด ในรูปแบบ Tree ภายใต้ node ที่รับค่า
-    // public function getCategoryTree($id)
-    // {
-    //     $category = Category::findOrFail($id);
-
-    //     return (new CategoryTreeResource($category))->response();
-    // }
-
+    /**
+     * @LRDparam per_page int|nullable|min:1|max:100
+     * // จำนวนรายการต่อหน้า
+     * @LRDparam page int|nullable|min:1
+     * // หมายเลขหน้าที่ต้องการ
+     * @LRDresponses 200|422
+     */
     public function getCategoryTree(Request $request, $id)
     {
+        $request->validate([
+            'per_page' => 'integer|min:1|max:100',
+            'page' => 'integer|min:1',
+        ]);
+
         $category = Category::findOrFail($id);
-        $perPage = $request->input('per_page', 10);
-        $page = $request->input('page', 1);
 
         return new CategoryTreeResource($category);
     }
 
-    public function getCategoryChildren(Request $request, $id)
-    {
-        $category = Category::findOrFail($id);
-        $perPage = $request->input('per_page', 1);
-        $page = $request->input('page', 1);
 
-        $children = $category->children()
-            ->orderBy('id')
-            ->paginate($perPage);
-
-        return CategoryTreeResource::collection($children);
-    }
 
     // GET: สำหรับเรียกดู Category ทั้งหมด ในรูปแบบ Array
-    public function getAllCategories()
+    /**
+     * @LRDparam per_page int|nullable|min:1|max:100
+     * // จำนวนรายการต่อหน้า
+     * @LRDparam page int|nullable|min:1
+     * // หมายเลขหน้าที่ต้องการ
+     * @LRDresponses 200|422
+     */
+    public function getAllCategories(Request $request)
     {
-        // $categories = Category::simplePaginate(10);
-        $categories = Category::all();
+        $request->validate([
+            'per_page' => 'integer|min:1|max:100',
+            'page' => 'integer|min:1',
+        ]);
+
+        $categories = Category::paginate($request->input('per_page', 10));
         return response()->json($categories);
     }
 

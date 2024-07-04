@@ -1,6 +1,6 @@
 # Cat Tree API
 
-Cat Tree API เป็น REST API สำหรับจัดการ Category แบบ Tree Structure
+REST API สำหรับจัดการ Category แบบ Tree Structure
 
 ## การติดตั้ง (Installation)
 
@@ -50,15 +50,3 @@ Cat Tree API เป็น REST API สำหรับจัดการ Category
     ```
 
 ## วิธีการใช้งานโปรเจกต์
-
-### สร้าง Category ใหม่
-
-```http
-POST /api/categories/
-Content-Type: application/json
-
-{
-    "name": "หมวดหมู่ใหม่",
-    "parent_id": null
-}
-```
